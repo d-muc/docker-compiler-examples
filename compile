@@ -3,18 +3,15 @@ COMPILER=${DCOMPILER:=dmd}
 VERSION=${DVERSION:=latest}
 TOOL=${DTOOL:=${COMPILER}}
 
-if [ "${TOOL}" = "ldc" ]
-then
+if [ "${TOOL}" = "ldc" ]; then
   TOOL='ldc2'
 fi
 
-if [ -n "${verbose}" ]
-then
+if [ -n "${verbose}" ]; then
   echo "Compiler ${COMPILER} in Version ${VERSION} using ${TOOL}"
 fi
 
-docker run --rm -ti \
-  -e USER -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_GROUP_ID=`id -g $USER` \
-  -w /user \
-  -v $(pwd):/user \
-  dlanguage/${COMPILER}:${VERSION} ${TOOL} $@
+if [ -n "${USE_LOCAL_USER}" ]; then
+  OPTIONS="-e USER -e HOME -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_GROUP_ID=`id -g $USER`"
+fi
+docker run --rm -ti ${OPTIONS:=} -w /user -v $(pwd):/user dlanguage/${COMPILER}:${VERSION} ${TOOL} $@
