@@ -8,9 +8,14 @@ function test() {
   fi
 }
 
+echo "DMD"
 DCOMPILER=dmd ./compile -ofhello_world.dmd hello_world/hello_world.d &&
 test 'hello_world.dmd'
+
+echo "GDC"
 DCOMPILER=gdc ./compile -o hello_world.gdc hello_world/hello_world.d &&
 test 'hello_world.gdc'
+
+echo "LDC"
 DCOMPILER=ldc ./compile -ofhello_world.ldc hello_world/hello_world.d &&
 test 'hello_world.ldc'

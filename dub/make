@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function test() {
+  (cd dbh && export DTOOL=dub && ../compile run) | grep -q "^Hello World.*$"
+  if [ $? -ne 0 ]; then
+    echo "Failed"
+    exit 1
+  fi
+}
+
+echo "DMD"
+(cd dub && export DTOOL=dub && ../compile build)
