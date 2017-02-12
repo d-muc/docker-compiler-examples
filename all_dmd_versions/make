@@ -1,0 +1,22 @@
+#!/bin/bash
+
+function test() {
+  docker run -ti -w $(pwd) -v $(pwd):/user ubuntu:14.04 /user/$1 | grep -q "^Hello World.*$"
+  if [ $? -ne 0 ]; then
+    echo "Failed"
+    exit 1
+  fi
+  echo 'ok'
+}
+
+function compile() {
+  echo -n "Compiling Hello World using dmd:$1 ... "
+  VERSION=$1 DCOMPILER=dmd ./compile $2 hello_world/hello_world.d
+}
+
+VERSIONS='2.073.0 2.072.2 2.072.1 2.072.0 2.071.2 2.071.1 2.070.2 2.070.1 2.070.0 2.069.2 2.069.1 2.069.0 2.068.2 2.068.1'
+VERSIONS=( $VERSIONS )
+for version in "${VERSIONS[@]}"; do
+  compile ${version} "-ofall_dmd_versions.${version}" &&
+  test "all_dmd_versions.${version}"
+done
