@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+DCOMPILER=dmd ./compile -ofreturn_code.dmd return_code.d
+DCOMPILER=gdc ./compile -o return_code.gdc return_code.d
+DCOMPILER=ldc ./compile -ofreturn_code.ldc return_code.d
+DCOMPILER=sdc ./compile -o return_code.sdc return_code.d
