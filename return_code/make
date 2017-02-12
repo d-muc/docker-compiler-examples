@@ -1,7 +1,26 @@
 #!/bin/bash
-set -e
 
-DCOMPILER=dmd ./compile -ofreturn_code.dmd return_code/return_code.d
+DCOMPILER=dmd ./compile -ofreturn_code.dmd return_code/return_code.d &&
+docker run -ti -w $(pwd) -v $(pwd):/user ubuntu:14.04 /user/return_code.dmd
+if [ $? -ne 23 ]; then
+  echo "Failed"
+  exit 1
+fi
 DCOMPILER=gdc ./compile -o return_code.gdc return_code/return_code.d
+docker run -ti -w $(pwd) -v $(pwd):/user ubuntu:14.04 /user/return_code.gdc
+if [ $? -ne 23 ]; then
+  echo "Failed"
+  exit 1
+fi
 DCOMPILER=ldc ./compile -ofreturn_code.ldc return_code/return_code.d
+docker run -ti -w $(pwd) -v $(pwd):/user ubuntu:14.04 /user/return_code.ldc
+if [ $? -ne 23 ]; then
+  echo "Failed"
+  exit 1
+fi
 DCOMPILER=sdc ./compile -o return_code.sdc return_code/return_code.d
+docker run -ti -w $(pwd) -v $(pwd):/user ubuntu:14.04 /user/return_code.sdc
+if [ $? -ne 23 ]; then
+  echo "Failed"
+  exit 1
+fi
