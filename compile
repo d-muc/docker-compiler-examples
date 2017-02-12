@@ -14,7 +14,7 @@ then
 fi
 
 docker run --rm -ti \
-  -e USER -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_GROUP_ID=`id -g $USER` \
+  -e USER -e HOME=/root -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_GROUP_ID=`id -g $USER` \
   -w /user \
   -v $(pwd):/user \
   dlanguage/${COMPILER}:${VERSION} ${TOOL} $@
