@@ -13,8 +13,8 @@ then
   echo "Compiler ${COMPILER} in Version ${VERSION} using ${TOOL}"
 fi
 
-#  -e USER -e HOME -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_GROUP_ID=`id -g $USER` \
 docker run --rm -ti \
+  -e USER -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_GROUP_ID=`id -g $USER` \
   -w /user \
   -v $(pwd):/user \
   dlanguage/${COMPILER}:${VERSION} ${TOOL} $@
