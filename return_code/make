@@ -6,13 +6,22 @@ function test() {
     echo "Failed"
     exit 1
   fi
+  echo 'ok'
 }
 
-DCOMPILER=dmd ./compile -ofreturn_code.dmd return_code/return_code.d &&
+function compile() {
+  echo -n "Compiling Return Code Example using $1 ... "
+  DCOMPILER=$1 ./compile $2 return_code/return_code.d
+}
+
+compile 'dmd' '-ofreturn_code.dmd' &&
 test 'return_code.dmd'
-DCOMPILER=gdc ./compile -o return_code.gdc return_code/return_code.d &&
+
+compile 'gdc' '-o return_code.gdc' &&
 test 'return_code.gdc'
-DCOMPILER=ldc ./compile -ofreturn_code.ldc return_code/return_code.d &&
+
+compile 'ldc' '-ofreturn_code.ldc' &&
 test 'return_code.ldc'
-DCOMPILER=sdc ./compile -o return_code.sdc return_code/return_code.d &&
+
+compile 'sdc' '-o return_code.sdc' &&
 test 'return_code.sdc'

@@ -6,16 +6,19 @@ function test() {
     echo "Failed"
     exit 1
   fi
+  echo 'ok'
 }
 
-echo "DMD"
-DCOMPILER=dmd ./compile -ofhello_world.dmd hello_world/hello_world.d &&
+function compile() {
+  echo -n "Compiling Hello World using $1 ... "
+  DCOMPILER=$1 ./compile $2 hello_world/hello_world.d
+}
+
+compile 'dmd' '-ofhello_world.dmd' &&
 test 'hello_world.dmd'
 
-echo "GDC"
-DCOMPILER=gdc ./compile -o hello_world.gdc hello_world/hello_world.d &&
+compile 'gdc' '-o hello_world.gdc' &&
 test 'hello_world.gdc'
 
-echo "LDC"
-DCOMPILER=ldc ./compile -ofhello_world.ldc hello_world/hello_world.d &&
+compile 'ldc' '-ofhello_world.ldc' &&
 test 'hello_world.ldc'
