@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function test() {
+  docker run -ti -w $(pwd) -v $(pwd):/user ubuntu:14.04 /user/$1 | grep -q "^Hello World.*$"
+  if [ $? -ne 0 ]; then
+    echo "Failed"
+    exit 1
+  fi
+}
+
+DCOMPILER=dmd ./compile -ofhello_world.dmd hello_world/hello_world.d &&
+test 'hello_world.dmd'
+DCOMPILER=gdc ./compile -o hello_world.gdc hello_world/hello_world.d &&
+test 'hello_world.gdc'
+DCOMPILER=ldc ./compile -ofhello_world.ldc hello_world/hello_world.d &&
+test 'hello_world.ldc'
