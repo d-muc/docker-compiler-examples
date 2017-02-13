@@ -8,7 +8,7 @@ Examples for Running D Compilers as Docker Containers
 - hello world - the simplest possible d program using phobos
 - all dmd versions - to compile same source with all available dmd versions
 - dub - to show the simplest possible dub project without any dependency
-- TODO: vibe.d - simplest possible dub project with dependencies
+- building dub itself - complex dub project
 
 ## Compile Script
 
